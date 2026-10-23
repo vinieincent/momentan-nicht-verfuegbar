@@ -1,81 +1,198 @@
 <!DOCTYPE html>
 <html lang="de">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Momentan nicht verfügbar</title>
-    <style>
-      :root {
-        --bg: #0f172a;
-        --panel: rgba(15, 23, 42, 0.8);
-        --text: #e2e8f0;
-        --muted: #94a3b8;
-        --accent: #38bdf8;
-      }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Scuffed Attack 3 – Start am 6. November um 18 Uhr</title>
+    <meta name="description" content="Scuffed Attack 3 startet am 6. November 2026 um 18 Uhr. Kostenlos anmelden und mit der Server-IP beitreten.">
+    <meta name="theme-color" content="#1b2030">
 
-      * {
-        box-sizing: border-box;
-      }
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Pixelify+Sans:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="site.css">
+</head>
+<body data-phase="soon">
 
-      html, body {
-        margin: 0;
-        min-height: 100%;
-        font-family: Arial, Helvetica, sans-serif;
-        background: #333;
-      }
+<a class="skip" href="#inhalt">Zum Inhalt springen</a>
 
-      body {
-        min-height: 100vh;
-        display: grid;
-        place-items: center;
-        padding: 24px;
-      }
+<header class="topbar">
+    <a class="brand" href="#top" data-project>Scuffed Attack 3</a>
+    <nav class="topnav" aria-label="Seitenbereiche">
+        <a href="#ip">Server-IP</a>
+        <a href="#spieler">Spieler</a>
+        <a href="#ablauf">So geht's</a>
+        <a href="#regeln">Regeln</a>
+    </nav>
+    <button type="button" class="btn btn-primary btn-small" data-open-signup>Anmelden</button>
+</header>
 
-      .container {
-        width: min(100%, 760px);
-        background: var(--panel);
-        border: 1px solid rgba(148, 163, 184, 0.2);
-        border-radius: 20px;
-        padding: 56px 32px;
-        text-align: center;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
-        backdrop-filter: blur(8px);
-      }
+<main id="inhalt">
 
-      .badge {
-        display: inline-block;
-        padding: 8px 16px;
-        border-radius: 999px;
-        border: 1px solid rgba(56, 189, 248, 0.5);
-        background: rgba(56, 189, 248, 0.08);
-        color: var(--accent);
-        font-size: 0.8rem;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        margin-bottom: 20px;
-      }
+    <!-- ===== Start / Countdown ===== -->
+    <section class="hero" id="top">
+        <h1 data-project>Scuffed Attack 3</h1>
+        <p class="when">
+            <time id="start-time"></time>
+            <span class="free">Kostenlos, keine Gebühr</span>
+        </p>
 
-      h1 {
-        margin: 0;
-        font-size: clamp(2.2rem, 6vw, 4rem);
-        line-height: 1.1;
-        letter-spacing: -0.04em;
-        color: #fff;
-      }
+        <div class="only-soon">
+            <div class="countdown" role="timer" aria-label="Zeit bis zum Start">
+                <div class="slot"><span class="num" id="cd-days">00</span><span class="unit">Tage</span></div>
+                <div class="slot"><span class="num" id="cd-hours">00</span><span class="unit">Stunden</span></div>
+                <div class="slot"><span class="num" id="cd-minutes">00</span><span class="unit">Minuten</span></div>
+                <div class="slot"><span class="num" id="cd-seconds">00</span><span class="unit">Sekunden</span></div>
+            </div>
+        </div>
 
-      p {
-        margin: 20px auto 0;
-        max-width: 540px;
-        color: var(--muted);
-        font-size: 1.1rem;
-        line-height: 1.6;
-      }
-    </style>
-  </head>
-  <body>
-    <main class="container">
-      <div class="badge">Status</div>
-      <h1>Momentan nicht verfügbar</h1>
-    </main>
-  </body>
+        <p class="live-note only-live">Der Server ist gestartet. Kopiere die IP und leg los!</p>
+
+        <div class="actions">
+            <button type="button" class="btn btn-primary" data-open-signup>Jetzt anmelden</button>
+            <button type="button" class="btn btn-secondary only-soon" id="btn-calendar">Im Kalender speichern</button>
+            <button type="button" class="btn btn-secondary only-live" data-copy-ip>IP kopieren</button>
+        </div>
+    </section>
+
+    <!-- ===== Server-IP ===== -->
+    <section class="panel connect" id="ip" aria-labelledby="ip-title">
+        <h2 id="ip-title">Server-IP</h2>
+        <p class="hint">Minecraft Java Edition. Zum Beitreten die IP kopieren und unter „Mehrspieler“ einfügen.</p>
+
+        <div class="ip-row">
+            <code class="ip slot-inset" data-ip>mc.craftingkatze.de</code>
+            <button type="button" class="btn btn-secondary" data-copy-ip>Kopieren</button>
+        </div>
+
+        <div class="status" id="status" data-state="loading" aria-live="polite">
+            <p class="status-line"><span class="dot" aria-hidden="true"></span><span id="status-text">Status wird geladen …</span></p>
+            <dl class="facts">
+                <div><dt>Version</dt><dd id="fact-version">–</dd></div>
+                <div><dt>Spieler online</dt><dd id="fact-players">–</dd></div>
+            </dl>
+            <button type="button" class="link-button" id="btn-refresh">Status aktualisieren</button>
+        </div>
+    </section>
+
+    <!-- ===== Spieler ===== -->
+    <section class="panel" id="spieler" aria-labelledby="players-title">
+        <div class="section-head">
+            <h2 id="players-title">Angemeldete Spieler <span class="count" id="players-count"></span></h2>
+            <label class="search">
+                <span class="visually-hidden">Spieler suchen</span>
+                <input type="search" id="player-search" placeholder="Name suchen" autocomplete="off" autocapitalize="off" spellcheck="false">
+            </label>
+        </div>
+
+        <div id="online-now" class="online-now" hidden>
+            <h3>Gerade online</h3>
+            <ul class="chips" id="online-list"></ul>
+        </div>
+
+        <div id="players-state" class="state" role="status">Lade Spieler …</div>
+        <ul class="player-grid" id="player-grid"></ul>
+        <button type="button" class="btn btn-secondary btn-small" id="btn-more" hidden></button>
+        <p class="small">Die Liste aktualisiert sich automatisch. Jeder Minecraft-Account kann nur einmal angemeldet werden.</p>
+    </section>
+
+    <!-- ===== Ablauf ===== -->
+    <section class="panel" id="ablauf" aria-labelledby="steps-title">
+        <h2 id="steps-title">So kommst du auf den Server</h2>
+        <ol class="steps">
+            <li>
+                <strong>Anmelden</strong>
+                <span>Klick auf „Anmelden“, Namen, Ingame-Namen und deinen Skill eintragen. Der Minecraft-Account wird automatisch geprüft. Das dauert eine Minute und kostet nichts.</span>
+            </li>
+            <li>
+                <strong>IP einfügen</strong>
+                <span>In Minecraft <b>Mehrspieler</b>, dann <b>Server hinzufügen</b>, und die kopierte IP bei „Serveradresse“ einfügen.</span>
+            </li>
+            <li>
+                <strong>Spielen</strong>
+                <span>Der Server öffnet am <span id="start-short">6. November um 18 Uhr</span>. Ab dann kannst du beitreten.</span>
+            </li>
+        </ol>
+    </section>
+
+    <!-- ===== Regeln ===== -->
+    <section class="panel" id="regeln" aria-labelledby="rules-title">
+        <h2 id="rules-title">Fair spielen</h2>
+        <p>
+            Eigene Mods sind erlaubt, solange sie fair bleiben und dir keinen Vorteil gegenüber anderen verschaffen.
+            Nicht erlaubt sind zum Beispiel X-Ray, Auto-Totem oder normale Freecam.
+        </p>
+        <div id="modpack" hidden>
+            <h3>Modpack</h3>
+            <p>Das offizielle Modpack läuft über Modrinth: Datei herunterladen, anklicken, fertig.</p>
+            <div class="actions">
+                <a class="btn btn-secondary" id="modpack-link" href="#" target="_blank" rel="noopener">Modpack herunterladen</a>
+                <a class="btn btn-ghost" href="https://modrinth.com/app" target="_blank" rel="noopener">Modrinth holen</a>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <a href="#" id="home-link">craftingkatze.de</a>
+    <a href="#" id="projects-link">Meine Projekte</a>
+</footer>
+
+<!-- ===== Anmelde-Popup (klein, Hintergrund geblurrt, jederzeit schließbar) ===== -->
+<dialog id="signup" aria-labelledby="signup-title">
+    <div class="dialog-card">
+        <div class="dialog-head">
+            <h2 id="signup-title">Anmeldung <span class="free">kostenlos</span></h2>
+            <button type="button" class="close" data-close aria-label="Schließen">×</button>
+        </div>
+
+        <p id="signup-unconfigured" class="form-error" hidden>Die Anmeldung ist noch nicht eingerichtet. Bitte später wiederkommen.</p>
+
+        <form id="signup-form" class="form" novalidate>
+            <label class="field">
+                <span>Name</span>
+                <input type="text" id="f-name" name="name" autocomplete="name" minlength="2" maxlength="40" required>
+            </label>
+
+            <label class="field">
+                <span>Ingame-Name (Minecraft Java)</span>
+                <input type="text" id="f-ingame" name="ingame" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="16" required aria-describedby="ingame-status">
+                <small id="ingame-status" class="field-status" aria-live="polite"></small>
+            </label>
+
+            <fieldset class="skill">
+                <legend>Minecraft-Skill</legend>
+                <div class="skill-scale">
+                    <label class="skill-opt"><input type="radio" name="skill" value="1" required><span>1</span></label>
+                    <label class="skill-opt"><input type="radio" name="skill" value="2"><span>2</span></label>
+                    <label class="skill-opt"><input type="radio" name="skill" value="3"><span>3</span></label>
+                    <label class="skill-opt"><input type="radio" name="skill" value="4"><span>4</span></label>
+                    <label class="skill-opt"><input type="radio" name="skill" value="5"><span>5</span></label>
+                </div>
+                <p class="skill-hint"><span>1 = Anfänger</span><span>5 = Profi</span></p>
+            </fieldset>
+
+            <div class="hp" aria-hidden="true"><label>Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+
+            <p class="form-error" id="form-error" role="alert" hidden></p>
+            <button type="submit" class="btn btn-primary" id="submit-btn">Anmelden</button>
+            <p class="note">Öffentlich sichtbar ist nur dein Ingame-Name. Dein Name bleibt privat.</p>
+        </form>
+
+        <div id="signup-done" class="done" hidden>
+            <img id="done-skin" alt="" width="72" height="72">
+            <h3>Du bist dabei, <span id="done-name"></span>!</h3>
+            <p>Wir sehen uns am <span id="done-when"></span>. Die IP findest du auf der Seite.</p>
+            <button type="button" class="btn btn-secondary" data-close>Schließen</button>
+        </div>
+    </div>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<noscript><p class="noscript">Für Countdown, Status und Spielerliste wird JavaScript benötigt. Auch die Anmeldung braucht JavaScript.</p></noscript>
+
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
 </html>
